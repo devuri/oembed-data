@@ -72,16 +72,13 @@ class YouTube
 	{
 
 		if ( 1 === $limit ) {
-			$data = $this->video( $v );
-			return $data;
+			return $this->video( $v );
 		}
 
 		if ( is_array( $v ) ) {
-			$data = $this->videos( $v, $limit );
-			return $data;
+			return $this->videos( $v, $limit );
 		} else {
-			$data = $this->video( $v );
-			return $data;
+			return $this->video( $v );
 		}
 	}
 
