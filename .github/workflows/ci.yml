@@ -11,7 +11,7 @@ jobs:
       
       - uses: etcdigital/pull-request-changelog@master
 
-      - uses: php-actions/composer@dynamic-docker
+      - uses: php-actions/composer@v5
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@dynamic-docker
