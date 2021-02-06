@@ -1,0 +1,31 @@
+{
+    "name": "devuri/oembed-data",
+    "type": "library",
+    "description": "Small WordPress library to get oEmbed data via Core class WP_oEmbed.",
+    "keywords": ["oEmbed", "wordpress"],
+    "homepage": "https://github.com/devuri/oembed-data",
+    "license": "MIT",
+    "authors": [
+        {
+			"name": "Uriel Wilson",
+            "email": "support@urielwilson.com",
+            "homepage": "https://urielwilson.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+		"source": "https://github.com/devuri/oembed-data",
+        "issues": "https://github.com/devuri/oembed-data/issues"
+    },
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Http\\": "src"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    }
+}
