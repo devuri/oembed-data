@@ -18,7 +18,8 @@ class DataAPI
 	 * @param  string $url video url.
 	 * @return object
 	 * @link https://developer.wordpress.org/reference/classes/wp_oembed/
-	 */
+     * @noinspection PhpFullyQualifiedNameUsageInspection
+     */
 	public static function get( $url = null )
 	{
 

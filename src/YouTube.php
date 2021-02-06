@@ -18,18 +18,18 @@ class YouTube
 		return false;
 	}
 
-	/**
-	 * Get the video id from url,
-	 * if not return false
-	 *
-	 * @param string $video_url the video url.
-	 * @return mixed
-	 */
+    /**
+     * Get the video id from url,
+     * if not return false
+     *
+     * @param string $video_url the video url.
+     * @return mixed
+     * @throws \Exception
+     */
 	protected function id( $video_url = null ) : string
 	{
 		if( ! $this->validate( $video_url ) ) {
             throw new \Exception('This is Not a valid URL');
-			$id = '';
         }
 
 		// check if empty.
@@ -49,12 +49,14 @@ class YouTube
 		return trim($id);
 	}
 
-	/**
-	 * Get the video ID,
-	 * if not return false
-	 *
-	 * @param string $url the video url.
-	 */
+    /**
+     * Get the video ID,
+     * if not return false
+     *
+     * @param string $url the video url.
+     * @return mixed|string
+     * @return mixed|string
+     */
 	public function getID( $url = null ) {
 		try {
 			return $this->id( $url );
@@ -63,12 +65,14 @@ class YouTube
 		}
 	}
 
-	/**
-	 * Get high quality video_thumbnail
-	 *
-	 * @param  string $video_url the video url.
-	 * @return string
-	 */
+    /**
+     * Get high quality video_thumbnail
+     *
+     * @param string $video_url the video url.
+     * @return string
+     * @throws \Exception
+     * @throws \Exception
+     */
 	public function thumbnail( $video_url = null ) : string
 	{
 		$id = $this->id( $video_url );
@@ -115,13 +119,15 @@ class YouTube
 		}
 	}
 
-	/**
-	 * Get video data for a single video using WP_oEmbed
-	 *
-	 * @param mixed $v video id.
-	 *
-	 * @return array video data
-	 */
+    /**
+     * Get video data for a single video using WP_oEmbed
+     *
+     * @param mixed $v video id.
+     *
+     * @return array video data
+     * @throws \Exception
+     * @throws \Exception
+     */
 	public function video( $v = null ) : array
 	{
 		if ( is_array( $v ) ) {
@@ -143,14 +149,15 @@ class YouTube
 		return $video;
 	}
 
-	/**
-	 * Get info for a list of videos using WP_oEmbed
-	 *
-	 * @param  mixed   $v array of video ids.
-	 * @param  integer $limit how many videos.
-	 *
-	 * @return array video data
-	 */
+    /**
+     * Get info for a list of videos using WP_oEmbed
+     *
+     * @param null $videos
+     * @param integer $limit how many videos.
+     *
+     * @return array video data
+     * @throws \Exception
+     */
 	public function videos( $videos = null, $limit = 2 ) : array
 	{
 
