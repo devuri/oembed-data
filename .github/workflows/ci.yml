@@ -8,8 +8,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - uses: etcdigital/pull-request-changelog@master
 
       - uses: php-actions/composer@v5
 
