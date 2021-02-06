@@ -1,0 +1,21 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: etcdigital/pull-request-changelog@master
+
+      - uses: php-actions/composer@dynamic-docker
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@dynamic-docker
+        with:
+          bootstrap: vendor/autoload.php
+          configuration: phpunit.xml
+          memory_limit: 256M
