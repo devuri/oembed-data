@@ -5,6 +5,20 @@ namespace Http;
 class YouTube
 {
 	/**
+	 * Make sure we get a valid URL
+	 *
+	 * @param  string $url youtube url
+	 * @return bool
+	 */
+	public function validate( $url = null ) : bool
+	{
+		if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Get the video id from url,
 	 * if not return false
 	 *
@@ -13,6 +27,10 @@ class YouTube
 	 */
 	public function id( $video_url = null ) : string
 	{
+		if( ! $this->validate( $video_url ) ) {
+            throw new \Exception('This is Not a valid URL');
+        }
+		
 		// check if empty.
 		if ( is_null( $video_url ) ) {
 			return '';
