@@ -10,7 +10,7 @@ class YouTube
 	 * @param  string $url youtube url
 	 * @return bool
 	 */
-	public function validate( $url = null ) : bool
+	protected function validate( $url = null ) : bool
 	{
 		if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return true;
@@ -25,12 +25,13 @@ class YouTube
 	 * @param string $video_url the video url.
 	 * @return mixed
 	 */
-	public function id( $video_url = null ) : string
+	protected function id( $video_url = null ) : string
 	{
 		if( ! $this->validate( $video_url ) ) {
             throw new \Exception('This is Not a valid URL');
+			$id = '';
         }
-		
+
 		// check if empty.
 		if ( is_null( $video_url ) ) {
 			return '';
@@ -46,6 +47,20 @@ class YouTube
 			}
 		}
 		return trim($id);
+	}
+
+	/**
+	 * Get the video ID,
+	 * if not return false
+	 *
+	 * @param string $url the video url.
+	 */
+	public function getID( $url = null ) {
+		try {
+			return $this->id( $url );
+		} catch (\Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
 	/**
