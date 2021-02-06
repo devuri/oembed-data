@@ -1,6 +1,8 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
+
+use InvalidArgumentException;
 
 class YouTube
 {
@@ -26,10 +28,10 @@ class YouTube
      * @return mixed
      * @throws \Exception
      */
-	protected function id( $video_url = null ) : string
+	public function id( $video_url = null ) : string
 	{
 		if( ! $this->validate( $video_url ) ) {
-            throw new \Exception('This is Not a valid URL');
+            throw new InvalidArgumentException("This is Not a valid URL.");
         }
 
 		// check if empty.

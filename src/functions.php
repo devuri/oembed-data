@@ -1,6 +1,6 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
 
 /**
  * Gets the oEmbed data.

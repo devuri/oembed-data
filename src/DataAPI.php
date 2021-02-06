@@ -1,6 +1,6 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
 
 /**
  * Get url data
