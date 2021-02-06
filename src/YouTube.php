@@ -5,17 +5,36 @@ namespace Http;
 class YouTube
 {
 	/**
+	 * Make sure we get a valid URL
+	 *
+	 * @param  string $url youtube url
+	 * @return bool
+	 */
+	protected function validate( $url = null ) : bool
+	{
+		if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Get the video id from url,
 	 * if not return false
 	 *
 	 * @param string $video_url the video url.
 	 * @return mixed
 	 */
-	public function id( $video_url = null ) : string
+	protected function id( $video_url = null ) : string
 	{
+		if( ! $this->validate( $video_url ) ) {
+            throw new \Exception('This is Not a valid URL');
+			$id = '';
+        }
+
 		// check if empty.
-		if ( empty( $video_url ) ) {
-			return false;
+		if ( is_null( $video_url ) ) {
+			return '';
 		}
 
 		// get the id.
@@ -24,10 +43,24 @@ class YouTube
 			if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $video_url, $video_id ) ) {
 				$id = $video_id[1];
 			} else {
-				$id = false;
+				$id = '';
 			}
 		}
-		return $id;
+		return trim($id);
+	}
+
+	/**
+	 * Get the video ID,
+	 * if not return false
+	 *
+	 * @param string $url the video url.
+	 */
+	public function getID( $url = null ) {
+		try {
+			return $this->id( $url );
+		} catch (\Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
 	/**
@@ -70,12 +103,15 @@ class YouTube
 	 */
 	public function info( $v = null, $limit = 1 ) : array
 	{
+
+		if ( 1 === $limit ) {
+			return $this->video( $v );
+		}
+
 		if ( is_array( $v ) ) {
-			$data = $this->videos( $v, $limit );
-			return $data;
+			return $this->videos( $v, $limit );
 		} else {
-			$data = $this->video( $v );
-			return $data;
+			return $this->video( $v );
 		}
 	}
 
@@ -88,6 +124,15 @@ class YouTube
 	 */
 	public function video( $v = null ) : array
 	{
+		if ( is_array( $v ) ) {
+			$v = reset( $v );
+		}
+
+		if ( empty( $this->id( $v ) ) ) {
+			return array();
+		}
+
+		$v = $this->id( $v );
 		$video = array(
 			'id'          => $v,
 			'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
@@ -106,10 +151,21 @@ class YouTube
 	 *
 	 * @return array video data
 	 */
-	public function videos( $v = null, $limit = 1 ) : array
+	public function videos( $videos = null, $limit = 2 ) : array
 	{
+
+		if ( 1 === $limit ) {
+			return $this->video( $videos );
+		}
+
 		$i = 0;
-		foreach ( $v as $key => $v ) {
+		foreach ( $videos as $key => $v ) {
+
+			if ( empty( $this->id( $v ) ) ) {
+				return array();
+			}
+
+			$v = $this->id( $v );
 
 			$videos[ $key ] = array(
 				'id'          => $v,
