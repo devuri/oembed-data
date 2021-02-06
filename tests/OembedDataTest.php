@@ -1,6 +1,5 @@
 <?php
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use DevUri\HttpData\DataAPI;
 use DevUri\HttpData\YouTube;
@@ -9,10 +8,10 @@ class OembedHttpDataTest extends TestCase
 {
 
 	/** @var string */
-	protected $url = 'https://www.youtube.com/watch?v=wfN4PVaOU5Q';
+	protected $url = 'https://www.youtube.com/watch?v=pvotANfq410';
 
 	/** @var string */
-	protected $invalid_url = 'httube.com/watch?v=wfN4PVaOU5Q';
+	protected $invalid_url = 'httube.com/watch?v=pvotANfq410';
 
 	protected function setUp(): void
 	{
@@ -20,21 +19,39 @@ class OembedHttpDataTest extends TestCase
 
 	}
 
-	/** @test */
-	public function can_get_video_id(): void
+	/**
+	 * @test
+	 */
+	public function can_get_video_id_as_string(): object
 	{
 		$youtube = (new YouTube());
-		$this->assertEquals(
-			'wfN4PVaOU5Q',
-			$youtube->id( $this->url )
+
+		$this->assertIsString( $youtube->id( $this->url ) );
+
+		return $youtube;
+	}
+
+	/**
+	 * @test
+	 * @depends can_get_video_id_as_string
+	 */
+	public function can_get_video_id( YouTube $youtube ): void
+	{
+		$this->assertSame(
+			'pvotANfq410',
+			$youtube->id( $this->url ),
+			'Expecting 11 char youtube Video ID, actual value does not equal what was expected'
 		);
 	}
 
-	/** @test */
-	public function throws_exception_for_invalid_url()
+	/**
+	 * @test
+	 * @depends can_get_video_id_as_string
+	 */
+	public function throws_exception_for_invalid_url( YouTube $youtube ) : void
 	{
-		$youtube = (new YouTube());
 		$this->expectException( InvalidArgumentException::class );
 		$youtube->id( $this->invalid_url );
 	}
+
 }
