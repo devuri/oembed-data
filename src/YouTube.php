@@ -14,8 +14,8 @@ class YouTube
 	public function id( $video_url = null ) : string
 	{
 		// check if empty.
-		if ( empty( $video_url ) ) {
-			return false;
+		if ( is_null( $video_url ) ) {
+			return '';
 		}
 
 		// get the id.
@@ -24,10 +24,10 @@ class YouTube
 			if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $video_url, $video_id ) ) {
 				$id = $video_id[1];
 			} else {
-				$id = false;
+				$id = '';
 			}
 		}
-		return $id;
+		return trim($id);
 	}
 
 	/**
@@ -70,6 +70,12 @@ class YouTube
 	 */
 	public function info( $v = null, $limit = 1 ) : array
 	{
+
+		if ( 1 === $limit ) {
+			$data = $this->video( $v );
+			return $data;
+		}
+
 		if ( is_array( $v ) ) {
 			$data = $this->videos( $v, $limit );
 			return $data;
@@ -88,6 +94,15 @@ class YouTube
 	 */
 	public function video( $v = null ) : array
 	{
+		if ( is_array( $v ) ) {
+			$v = reset( $v );
+		}
+
+		if ( empty( $this->id( $v ) ) ) {
+			return array();
+		}
+
+		$v = $this->id( $v );
 		$video = array(
 			'id'          => $v,
 			'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
@@ -106,10 +121,21 @@ class YouTube
 	 *
 	 * @return array video data
 	 */
-	public function videos( $v = null, $limit = 1 ) : array
+	public function videos( $videos = null, $limit = 2 ) : array
 	{
+
+		if ( 1 === $limit ) {
+			return $this->video( $videos );
+		}
+
 		$i = 0;
-		foreach ( $v as $key => $v ) {
+		foreach ( $videos as $key => $v ) {
+
+			if ( empty( $this->id( $v ) ) ) {
+				return array();
+			}
+
+			$v = $this->id( $v );
 
 			$videos[ $key ] = array(
 				'id'          => $v,
