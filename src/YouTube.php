@@ -139,14 +139,13 @@ class YouTube
 		}
 
 		$v = $this->id( $v );
-		$video = array(
-			'id'          => $v,
-			'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
-			'thumbnail'   => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->thumbnail_url,
-			'author_name' => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_name,
-			'author_url'  => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_url,
-		);
-		return $video;
+        return array(
+            'id'          => $v,
+            'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
+            'thumbnail'   => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->thumbnail_url,
+            'author_name' => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_name,
+            'author_url'  => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_url,
+        );
 	}
 
     /**

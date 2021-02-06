@@ -43,8 +43,7 @@ class DataAPI
 		$provider = array();
 		$provider['name'] = self::get( $geturl )->provider_name;
 		$provider['url']  = self::get( $geturl )->provider_url;
-		$obdata       = (object) $provider;
-		return $obdata;
+        return (object) $provider;
 	}
 
 }
