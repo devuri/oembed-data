@@ -1,10 +1,11 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
 
 /**
  * Gets the oEmbed data.
  *
+ * @param string $url
  * @return mixed
  */
 function data( string $url ) {
@@ -14,6 +15,7 @@ function data( string $url ) {
 /**
  * Gets the oEmbed data provider.
  *
+ * @param string $url
  * @return mixed
  */
 function data_provider( string $url ) {

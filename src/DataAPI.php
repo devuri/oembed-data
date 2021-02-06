@@ -1,6 +1,6 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
 
 /**
  * Get url data
@@ -18,7 +18,8 @@ class DataAPI
 	 * @param  string $url video url.
 	 * @return object
 	 * @link https://developer.wordpress.org/reference/classes/wp_oembed/
-	 */
+     * @noinspection PhpFullyQualifiedNameUsageInspection
+     */
 	public static function get( $url = null )
 	{
 
@@ -42,8 +43,7 @@ class DataAPI
 		$provider = array();
 		$provider['name'] = self::get( $geturl )->provider_name;
 		$provider['url']  = self::get( $geturl )->provider_url;
-		$obdata       = (object) $provider;
-		return $obdata;
+        return (object) $provider;
 	}
 
 }

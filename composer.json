@@ -2,7 +2,11 @@
     "name": "devuri/oembed-data",
     "type": "library",
     "description": "Small WordPress library to get oEmbed data via Core class WP_oEmbed.",
-    "keywords": ["oEmbed", "wordpress"],
+    "keywords": [
+		"oEmbed",
+		"wordpress",
+		"devuri"
+	],
     "homepage": "https://github.com/devuri/oembed-data",
     "license": "MIT",
     "authors": [
@@ -20,12 +24,28 @@
     "require": {
         "php": ">=7.2"
     },
+	"require-dev": {
+		"phpunit/phpunit": "^8.0|^9.0",
+		"symfony/var-dumper": "^3.4"
+	},
     "autoload": {
         "psr-4": {
-            "Http\\": "src"
+            "DevUri\\HttpData\\": "src"
         },
         "files": [
             "src/functions.php"
         ]
-    }
+    },
+	"autoload-dev": {
+        "psr-4": {
+            "DevUri\\HttpData\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true,
+		"optimize-autoloader": true
+  }
 }

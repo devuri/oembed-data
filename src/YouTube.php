@@ -1,6 +1,8 @@
 <?php
 
-namespace Http;
+namespace DevUri\HttpData;
+
+use InvalidArgumentException;
 
 class YouTube
 {
@@ -18,18 +20,18 @@ class YouTube
 		return false;
 	}
 
-	/**
-	 * Get the video id from url,
-	 * if not return false
-	 *
-	 * @param string $video_url the video url.
-	 * @return mixed
-	 */
-	protected function id( $video_url = null ) : string
+    /**
+     * Get the video id from url,
+     * if not return false
+     *
+     * @param string $video_url the video url.
+     * @return mixed
+     * @throws \Exception
+     */
+	public function id( $video_url = null ) : string
 	{
 		if( ! $this->validate( $video_url ) ) {
-            throw new \Exception('This is Not a valid URL');
-			$id = '';
+            throw new InvalidArgumentException("This is Not a valid URL.");
         }
 
 		// check if empty.
@@ -49,12 +51,14 @@ class YouTube
 		return trim($id);
 	}
 
-	/**
-	 * Get the video ID,
-	 * if not return false
-	 *
-	 * @param string $url the video url.
-	 */
+    /**
+     * Get the video ID,
+     * if not return false
+     *
+     * @param string $url the video url.
+     * @return mixed|string
+     * @return mixed|string
+     */
 	public function getID( $url = null ) {
 		try {
 			return $this->id( $url );
@@ -63,12 +67,14 @@ class YouTube
 		}
 	}
 
-	/**
-	 * Get high quality video_thumbnail
-	 *
-	 * @param  string $video_url the video url.
-	 * @return string
-	 */
+    /**
+     * Get high quality video_thumbnail
+     *
+     * @param string $video_url the video url.
+     * @return string
+     * @throws \Exception
+     * @throws \Exception
+     */
 	public function thumbnail( $video_url = null ) : string
 	{
 		$id = $this->id( $video_url );
@@ -115,13 +121,15 @@ class YouTube
 		}
 	}
 
-	/**
-	 * Get video data for a single video using WP_oEmbed
-	 *
-	 * @param mixed $v video id.
-	 *
-	 * @return array video data
-	 */
+    /**
+     * Get video data for a single video using WP_oEmbed
+     *
+     * @param mixed $v video id.
+     *
+     * @return array video data
+     * @throws \Exception
+     * @throws \Exception
+     */
 	public function video( $v = null ) : array
 	{
 		if ( is_array( $v ) ) {
@@ -133,24 +141,24 @@ class YouTube
 		}
 
 		$v = $this->id( $v );
-		$video = array(
-			'id'          => $v,
-			'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
-			'thumbnail'   => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->thumbnail_url,
-			'author_name' => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_name,
-			'author_url'  => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_url,
-		);
-		return $video;
+        return array(
+            'id'          => $v,
+            'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
+            'thumbnail'   => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->thumbnail_url,
+            'author_name' => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_name,
+            'author_url'  => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->author_url,
+        );
 	}
 
-	/**
-	 * Get info for a list of videos using WP_oEmbed
-	 *
-	 * @param  mixed   $v array of video ids.
-	 * @param  integer $limit how many videos.
-	 *
-	 * @return array video data
-	 */
+    /**
+     * Get info for a list of videos using WP_oEmbed
+     *
+     * @param null $videos
+     * @param integer $limit how many videos.
+     *
+     * @return array video data
+     * @throws \Exception
+     */
 	public function videos( $videos = null, $limit = 2 ) : array
 	{
 
