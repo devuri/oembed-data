@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use DevUri\HttpData\DataAPI;
-use DevUri\HttpData\YouTube;
+use DevUri\HttpData\YouTubeVideo;
 
 class OembedHttpDataTest extends TestCase
 {
@@ -24,7 +24,7 @@ class OembedHttpDataTest extends TestCase
 	 */
 	public function can_get_video_id_as_string(): object
 	{
-		$youtube = (new YouTube());
+		$youtube = (new YouTubeVideo());
 
 		$this->assertIsString( $youtube->id( $this->url ) );
 
@@ -35,7 +35,7 @@ class OembedHttpDataTest extends TestCase
 	 * @test
 	 * @depends can_get_video_id_as_string
 	 */
-	public function can_get_video_id( YouTube $youtube ): void
+	public function can_get_video_id( YouTubeVideo $youtube ): void
 	{
 		$this->assertSame(
 			'pvotANfq410',
@@ -48,7 +48,7 @@ class OembedHttpDataTest extends TestCase
 	 * @test
 	 * @depends can_get_video_id_as_string
 	 */
-	public function throws_exception_for_invalid_url( YouTube $youtube ) : void
+	public function throws_exception_for_invalid_url( YouTubeVideo $youtube ) : void
 	{
 		$this->expectException( InvalidArgumentException::class );
 		$youtube->id( $this->invalid_url );

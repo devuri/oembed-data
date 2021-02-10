@@ -4,7 +4,7 @@ namespace DevUri\HttpData;
 
 use InvalidArgumentException;
 
-class YouTube
+class YouTubeVideo
 {
 	/**
 	 * Make sure we get a valid URL
@@ -59,7 +59,8 @@ class YouTube
      * @return mixed|string
      * @return mixed|string
      */
-	public function getID( $url = null ) {
+	public function getID( $url = null )
+	{
 		try {
 			return $this->id( $url );
 		} catch (\Exception $e) {
@@ -72,7 +73,6 @@ class YouTube
      *
      * @param string $video_url the video url.
      * @return string
-     * @throws \Exception
      * @throws \Exception
      */
 	public function thumbnail( $video_url = null ) : string
@@ -109,7 +109,6 @@ class YouTube
 	 */
 	public function info( $v = null, $limit = 1 ) : array
 	{
-
 		if ( 1 === $limit ) {
 			return $this->video( $v );
 		}
@@ -127,7 +126,6 @@ class YouTube
      * @param mixed $v video id.
      *
      * @return array video data
-     * @throws \Exception
      * @throws \Exception
      */
 	public function video( $v = null ) : array
@@ -161,7 +159,6 @@ class YouTube
      */
 	public function videos( $videos = null, $limit = 2 ) : array
 	{
-
 		if ( 1 === $limit ) {
 			return $this->video( $videos );
 		}
@@ -174,7 +171,6 @@ class YouTube
 			}
 
 			$v = $this->id( $v );
-
 			$videos[ $key ] = array(
 				'id'          => $v,
 				'title'       => DataAPI::get( 'https://www.youtube.com/watch?v=' . $v )->title,
